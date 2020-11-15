@@ -3,7 +3,11 @@ plugins {
     id("com.github.spotbugs") version "4.5.0"
     id("checkstyle")
     id("jacoco")
+    id("info.solidsoft.pitest") version "1.5.1"
 }
+
+group = "nl.ricoapon"
+version = "0.0.1-SNAPSHOT"
 
 java {
     sourceCompatibility = JavaVersion.VERSION_15
@@ -91,4 +95,17 @@ tasks.jacocoTestReport {
 tasks.register("jacoco") {
     dependsOn(tasks.jacocoTestCoverageVerification)
     dependsOn(tasks.jacocoTestReport)
+}
+
+// ================
+// Pitest
+// ================
+pitest {
+    junit5PluginVersion.set("0.12")
+    outputFormats.set(listOf("HTML"))
+    timestampedReports.set(false)
+    threads.set(4)
+}
+tasks.check {
+    finalizedBy(tasks.pitest)
 }
