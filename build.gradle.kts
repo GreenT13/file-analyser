@@ -1,11 +1,10 @@
 plugins {
-    // Apply the java-library plugin to add support for Java Library
     `java-library`
 }
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_14
-    targetCompatibility = JavaVersion.VERSION_14
+    sourceCompatibility = JavaVersion.VERSION_15
+    targetCompatibility = JavaVersion.VERSION_15
 }
 
 repositories {
@@ -15,8 +14,6 @@ repositories {
 }
 
 dependencies {
-    implementation("org.jgrapht:jgrapht-core:1.5.0")
-
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.6.2")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.6.2")
     testImplementation("org.hamcrest:hamcrest:2.2")
