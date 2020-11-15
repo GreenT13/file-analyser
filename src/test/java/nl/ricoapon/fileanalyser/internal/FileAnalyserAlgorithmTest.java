@@ -24,6 +24,11 @@ class FileAnalyserAlgorithmTest {
                 storage.nrOfA += 1;
             }
         }
+
+        @Override
+        public Class<Storage> getStorageClass() {
+            return Storage.class;
+        }
     }
 
     /** Implementation of {@link BlockAnalyser} that will count how many blocks are processed. */
@@ -31,6 +36,11 @@ class FileAnalyserAlgorithmTest {
         @Override
         public void processBlock(String block, Storage storage) {
             storage.nrOfBlocks += 1;
+        }
+
+        @Override
+        public Class<Storage> getStorageClass() {
+            return Storage.class;
         }
     }
 
@@ -44,6 +54,11 @@ class FileAnalyserAlgorithmTest {
         @Override
         public boolean shouldProcessBlock(String block, Storage storage) {
             return false;
+        }
+
+        @Override
+        public Class<Storage> getStorageClass() {
+            return Storage.class;
         }
     }
 
