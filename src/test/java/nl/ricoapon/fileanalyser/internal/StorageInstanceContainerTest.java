@@ -119,4 +119,10 @@ class StorageInstanceContainerTest {
         assertThat(result1, equalTo(instanceMap));
         assertThat(result2, equalTo(instanceMap));
     }
+
+    @Test
+    void constructorThrowsNpeWithNullInput() {
+        assertThrows(NullPointerException.class, () -> new StorageInstanceContainer((Map<Class<?>, Object>) null));
+        assertThrows(NullPointerException.class, () -> new StorageInstanceContainer((List<Object>) null));
+    }
 }
