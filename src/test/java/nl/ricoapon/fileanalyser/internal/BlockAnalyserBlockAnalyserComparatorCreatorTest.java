@@ -18,7 +18,9 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @SuppressFBWarnings(value = "SIC_INNER_SHOULD_BE_STATIC", justification = "@Nested classes should be non-static, but SpotBugs wants them static." +
         "See https://github.com/spotbugs/spotbugs/issues/560 for the bug (open since 2018).")
-class BlockAnalyserOrderComparatorCreatorTest {
+class blockAnalyserComparatorCreatorTest {
+    private final BlockAnalyserOrderComparatorCreator<String> blockAnalyserComparatorCreator = new BlockAnalyserOrderComparatorCreator<>();
+
     /**
      * Basic class that can be extended to avoid boiler plate of block analysers or to instantiate empty block analysers.
      */
@@ -54,10 +56,10 @@ class BlockAnalyserOrderComparatorCreatorTest {
         @Test
         public void cyclicDependencyIsDetected() {
             // Given
-            List<BlockAnalyser<?, ?>> blockAnalysers = Arrays.asList(new CyclicAnalyser1(), new CyclicAnalyser2(), new CyclicAnalyser3());
+            List<BlockAnalyser<String, ?>> blockAnalysers = Arrays.asList(new CyclicAnalyser1(), new CyclicAnalyser2(), new CyclicAnalyser3());
 
             // When and then
-            assertThrows(FileAnalyserConfigurationException.class, () -> BlockAnalyserOrderComparatorCreator.createPreservingBlockAnalyserOrder(blockAnalysers));
+            assertThrows(FileAnalyserConfigurationException.class, () -> blockAnalyserComparatorCreator.create(blockAnalysers));
         }
     }
 
@@ -85,10 +87,10 @@ class BlockAnalyserOrderComparatorCreatorTest {
             var middle1 = new Middle1();
             var middle2 = new Middle2();
             var last = new Last();
-            List<BlockAnalyser<?, ?>> blockAnalysers = Arrays.asList(middle1, last, middle2, first);
+            List<BlockAnalyser<String, ?>> blockAnalysers = Arrays.asList(middle1, last, middle2, first);
 
             // When
-            blockAnalysers.sort(BlockAnalyserOrderComparatorCreator.createPreservingBlockAnalyserOrder(blockAnalysers));
+            blockAnalysers.sort(blockAnalyserComparatorCreator.create(blockAnalysers));
 
             // Then
             // Note that two elements that are considered equal (middle1 and middle2) will never be reordered.
@@ -103,10 +105,10 @@ class BlockAnalyserOrderComparatorCreatorTest {
             var middle1 = new Middle1();
             var middle2 = new Middle2();
             var last = new Last();
-            List<BlockAnalyser<?, ?>> blockAnalysers = Arrays.asList(last, middle1, first1, middle2, first2);
+            List<BlockAnalyser<String, ?>> blockAnalysers = Arrays.asList(last, middle1, first1, middle2, first2);
 
             // When
-            blockAnalysers.sort(BlockAnalyserOrderComparatorCreator.createPreservingBlockAnalyserOrder(blockAnalysers));
+            blockAnalysers.sort(blockAnalyserComparatorCreator.create(blockAnalysers));
 
             // Then
             // Note that two elements that are considered equal (firstX and middleX) will never be reordered.
@@ -118,8 +120,8 @@ class BlockAnalyserOrderComparatorCreatorTest {
             // Given
             var first = new First();
             var middle = new Middle1();
-            List<BlockAnalyser<?, ?>> blockAnalysers = Arrays.asList(first, middle);
-            Comparator<BlockAnalyser<?, ?>> comparator = BlockAnalyserOrderComparatorCreator.createPreservingBlockAnalyserOrder(blockAnalysers);
+            List<BlockAnalyser<String, ?>> blockAnalysers = Arrays.asList(first, middle);
+            Comparator<BlockAnalyser<String, ?>> comparator = blockAnalyserComparatorCreator.create(blockAnalysers);
 
             // When and then
             assertThat(comparator.compare(first, middle), equalTo(-1));
@@ -141,10 +143,10 @@ class BlockAnalyserOrderComparatorCreatorTest {
             // Given
             var a = new A();
             var b = new B();
-            List<BlockAnalyser<?, ?>> blockAnalysers = Arrays.asList(a, b);
+            List<BlockAnalyser<String, ?>> blockAnalysers = Arrays.asList(a, b);
 
             // When
-            blockAnalysers.sort(BlockAnalyserOrderComparatorCreator.createPreservingBlockAnalyserOrder(blockAnalysers));
+            blockAnalysers.sort(blockAnalyserComparatorCreator.create(blockAnalysers));
 
             // Then
             // Note that two elements that have no relation will never be reordered.
@@ -157,7 +159,7 @@ class BlockAnalyserOrderComparatorCreatorTest {
             var blockAnalyser = new BasicBlockAnalyser();
 
             // When
-            var comparator = BlockAnalyserOrderComparatorCreator.createPreservingBlockAnalyserOrder(Collections.singleton(blockAnalyser));
+            var comparator = blockAnalyserComparatorCreator.create(Collections.singleton(blockAnalyser));
 
             // Then
             // List with two identical items is not testable, so we test the comparator directly.

@@ -11,14 +11,9 @@ import java.util.Collection;
 import java.util.Comparator;
 
 /**
- * Creates {@link Comparator} for {@link BlockAnalyser} objects.
+ * Creates {@link Comparator} for {@link BlockAnalyser} objects based on {@link BlockAnalyserOrder}.
  */
-public class BlockAnalyserOrderComparatorCreator {
-
-    private BlockAnalyserOrderComparatorCreator() {
-        // This class is not meant to be initialized.
-    }
-
+public class BlockAnalyserOrderComparatorCreator<B> implements BlockAnalyserComparatorCreator<B> {
     /**
      * Creates a {@link Comparator} that preserves the order defined by {@link BlockAnalyserOrder}.
      * This comes down to a {@link Comparator} compares A and B in such a way that:
@@ -29,7 +24,8 @@ public class BlockAnalyserOrderComparatorCreator {
      * @param blockAnalysers The list of block analysers.
      * @return {@link Comparator}
      */
-    public static Comparator<BlockAnalyser<?, ?>> createPreservingBlockAnalyserOrder(Collection<BlockAnalyser<?, ?>> blockAnalysers) {
+    @Override
+    public Comparator<BlockAnalyser<B, ?>> create(Collection<BlockAnalyser<B, ?>> blockAnalysers) {
         DirectedAcyclicGraph<BlockAnalyser<?, ?>, DefaultEdge> directedAcyclicGraph = createGraph(blockAnalysers);
 
         // Create a shortest path object using any algorithm. Dijkstra was chosen because it is the most popular.
@@ -65,7 +61,7 @@ public class BlockAnalyserOrderComparatorCreator {
      * @return A directed acyclic graph.
      * @throws FileAnalyserConfigurationException If a cyclic relation occurs in the graph.
      */
-    private static DirectedAcyclicGraph<BlockAnalyser<?, ?>, DefaultEdge> createGraph(Collection<BlockAnalyser<?, ?>> blockAnalysers) {
+    private DirectedAcyclicGraph<BlockAnalyser<?, ?>, DefaultEdge> createGraph(Collection<BlockAnalyser<B, ?>> blockAnalysers) {
         // The full type must be spelled out (instead of using var) to avoid compile errors.
         GraphBuilder<BlockAnalyser<?, ?>, DefaultEdge, ? extends DirectedAcyclicGraph<BlockAnalyser<?, ?>, DefaultEdge>> graphBuilder
                 = DirectedAcyclicGraph.createBuilder(DefaultEdge.class);
@@ -100,7 +96,7 @@ public class BlockAnalyserOrderComparatorCreator {
      * This does not take transitive relations into account.
      */
     @SuppressWarnings("rawtypes")
-    private static boolean shouldABeAfterBWithoutTransitive(BlockAnalyser<?, ?> blockAnalyserA, BlockAnalyser<?, ?> blockAnalyserB) {
+    private boolean shouldABeAfterBWithoutTransitive(BlockAnalyser<?, ?> blockAnalyserA, BlockAnalyser<?, ?> blockAnalyserB) {
         BlockAnalyserOrder annotation = blockAnalyserA.getClass().getAnnotation(BlockAnalyserOrder.class);
         if (annotation == null) {
             return false;
