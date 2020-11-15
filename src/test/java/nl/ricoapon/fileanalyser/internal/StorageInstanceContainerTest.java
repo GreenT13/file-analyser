@@ -10,7 +10,6 @@ import java.util.Map;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.in;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @SuppressWarnings("OptionalGetWithoutIsPresent")
@@ -118,5 +117,11 @@ class StorageInstanceContainerTest {
         // Equals of map check whether all entries are identical, meaning copies of maps are identical.
         assertThat(result1, equalTo(instanceMap));
         assertThat(result2, equalTo(instanceMap));
+    }
+
+    @Test
+    void constructorThrowsNpeWithNullInput() {
+        assertThrows(NullPointerException.class, () -> new StorageInstanceContainer((Map<Class<?>, Object>) null));
+        assertThrows(NullPointerException.class, () -> new StorageInstanceContainer((List<Object>) null));
     }
 }

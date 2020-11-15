@@ -30,6 +30,7 @@ public class StorageInstanceContainer {
      * @throws FileAnalyserConfigurationException When more than one instance is supplied for a single class.
      */
     public StorageInstanceContainer(List<Object> storageInstancesList) {
+        Objects.requireNonNull(storageInstancesList);
         storageInstances = new HashMap<>();
         for (Object storageInstance : storageInstancesList) {
             Class<?> storageInstanceClass = storageInstance.getClass();
