@@ -28,7 +28,7 @@ public class FileAnalyserAlgorithm<B> {
      * @param blockSupplier            The supplier of blocks.
      * @param blockAnalysers           The objects that analyse the blocks.
      * @param storageInstanceContainer Container with all the storage instances.
-     * @return Map with all the storage instances.
+     * @return Map with the classes of the storage instances as key and the instances corresponding to that class as value.
      */
     @SuppressWarnings({"rawtypes", "unchecked"})
     public Map<Class<?>, Object> execute(Iterator<B> blockSupplier, Collection<BlockAnalyser<B, ?>> blockAnalysers, StorageInstanceContainer storageInstanceContainer) {
