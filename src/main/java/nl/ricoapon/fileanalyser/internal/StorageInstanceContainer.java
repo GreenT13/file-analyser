@@ -2,8 +2,8 @@ package nl.ricoapon.fileanalyser.internal;
 
 import nl.ricoapon.fileanalyser.analyser.BlockAnalyser;
 
+import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
@@ -16,20 +16,11 @@ public class StorageInstanceContainer {
     private final Map<Class<?>, Object> storageInstances;
 
     /**
-     * Creates a container with a copy of the given map.
-     * @param storageInstances The map of storage instances.
-     */
-    public StorageInstanceContainer(Map<Class<?>, Object> storageInstances) {
-        Objects.requireNonNull(storageInstances);
-        this.storageInstances = new HashMap<>(storageInstances);
-    }
-
-    /**
      * Creates a container based on the given list.
      * @param storageInstancesList The list of storage instances.
      * @throws FileAnalyserConfigurationException When more than one instance is supplied for a single class.
      */
-    public StorageInstanceContainer(List<Object> storageInstancesList) {
+    public StorageInstanceContainer(Collection<Object> storageInstancesList) {
         Objects.requireNonNull(storageInstancesList);
         storageInstances = new HashMap<>();
         for (Object storageInstance : storageInstancesList) {

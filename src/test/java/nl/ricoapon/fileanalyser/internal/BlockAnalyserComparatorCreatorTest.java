@@ -18,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @SuppressFBWarnings(value = "SIC_INNER_SHOULD_BE_STATIC", justification = "@Nested classes should be non-static, but SpotBugs wants them static." +
         "See https://github.com/spotbugs/spotbugs/issues/560 for the bug (open since 2018).")
-class blockAnalyserComparatorCreatorTest {
+class BlockAnalyserComparatorCreatorTest {
     private final BlockAnalyserOrderComparatorCreator<String> blockAnalyserComparatorCreator = new BlockAnalyserOrderComparatorCreator<>();
 
     /**
