@@ -58,7 +58,7 @@ public class FileAnalyser<B> {
     /**
      * See {@link #addBlockAnalyserClasses(Collection)}.
      */
-    public FileAnalyser<B> addBlockAnalyserClass(Class<? extends BlockAnalyser<B, ?>> blockAnalyserClass) {
+    public FileAnalyser<B> addBlockAnalyserClass(Class<? extends BlockAnalyser<B, ?>> blockAnalyserClass) throws FileAnalyserConfigurationException {
         return addBlockAnalyserClasses(Collections.singleton(blockAnalyserClass));
     }
 
@@ -68,7 +68,7 @@ public class FileAnalyser<B> {
      * @return This object.
      * @throws FileAnalyserConfigurationException If the instance could not be created.
      */
-    public FileAnalyser<B> addBlockAnalyserClasses(Collection<Class<? extends BlockAnalyser<B, ?>>> blockAnalyserClasses) {
+    public FileAnalyser<B> addBlockAnalyserClasses(Collection<Class<? extends BlockAnalyser<B, ?>>> blockAnalyserClasses) throws FileAnalyserConfigurationException {
         this.blockAnalysers.addAll(blockAnalyserClasses.stream()
                 .map(ReflectionUtil::instantiate).collect(Collectors.toList()));
         return this;
@@ -94,7 +94,7 @@ public class FileAnalyser<B> {
     /**
      * See {@link #addStorageClasses(Collection)}.
      */
-    public FileAnalyser<B> addStorageClass(Class<?> storageClass) {
+    public FileAnalyser<B> addStorageClass(Class<?> storageClass) throws FileAnalyserConfigurationException {
         return addStorageClasses(Collections.singleton(storageClass));
     }
 
@@ -102,8 +102,9 @@ public class FileAnalyser<B> {
      * Instantiates storage instances using the no-arg constructor of the classes and adds them to the algorithm.
      * @param storageClasses The storage classes.
      * @return This object.
+     * @throws FileAnalyserConfigurationException If the instance could not be created.
      */
-    public FileAnalyser<B> addStorageClasses(Collection<Class<?>> storageClasses) {
+    public FileAnalyser<B> addStorageClasses(Collection<Class<?>> storageClasses) throws FileAnalyserConfigurationException {
         this.storageInstances.addAll(storageClasses.stream()
                 .map(ReflectionUtil::instantiate).collect(Collectors.toList()));
         return this;
