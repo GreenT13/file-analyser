@@ -1,4 +1,4 @@
-# File analyser [![Build Status](https://travis-ci.com/GreenT13/file-analyser.svg?branch=main)](https://travis-ci.com/GreenT13/file-analyser) [![codecov](https://codecov.io/gh/GreenT13/file-analyser/branch/main/graph/badge.svg?token=3NVR4HFCB8)](https://codecov.io/gh/GreenT13/file-analyser)
+# File analyser [![Build Status](https://travis-ci.com/ricoapon/file-analyser.svg?branch=main)](https://travis-ci.com/ricoapon/file-analyser) [![codecov](https://codecov.io/gh/ricoapon/file-analyser/branch/main/graph/badge.svg?token=3NVR4HFCB8)](https://codecov.io/gh/ricoapon/file-analyser)
 
 # Local development tips
 All additional plugins to check the code base should run when calling the following gradle command:
